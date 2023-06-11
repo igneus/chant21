@@ -14,4 +14,4 @@ jobs:
       - name: Install dependencies
         run: pip install .
       - name: Run tests
-        run: python -m unittest tests/*.py
+        run: pwd && ls && python -m unittest tests/*.py
