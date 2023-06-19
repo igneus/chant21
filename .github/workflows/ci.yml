@@ -3,6 +3,13 @@ on: [push, pull_request]
 jobs:
   tests:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        music21-version:
+          - 5.7.2 # lowest supported per requirements.txt
+          - 6.1
+          - 7.1
+          - ~ # no version specified - take newest supported per requirements.txt
 
     steps:
       - name: Check out code
@@ -11,6 +18,9 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
+      - name: Install specific music21 version
+        run: pip install music21==${{ matrix.music21-version }}
+        if: matrix.music21-version != null
       - name: Install dependencies
         run: |
           pip install . &&
